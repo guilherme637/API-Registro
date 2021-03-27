@@ -12,12 +12,24 @@ adquirindo em meus estudos.
 
 <hr>
 
+A conexão padrão esta para SQLite, mas você pode escolher qualquer conexão no arquivo `.env` e descomentandos as linhas. para descomentar basta remover `#`.
+
+ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?
+#DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name
+
+
     Executar na linha de comando
     
-    º composer install.
+    º composer install //instala todas dependências que o projeto precisa
+    ° php bin/console doctrine:database:create // cria um o banco de dados de acordo com o driver
+    ° php bin/console doctrine:migrations:migrate // executa o SQL para criar as tabelas
+    ° php bin/console doctrine:fixture:load // irá criar o usuário e tipos de conta
     º php -S localhost:8080 -t public // esse comando ira subir um servidor local para acessar as rotas
+    
 
 <hr>
+
 Verbos HTTP's utilizados
  
  - GET
@@ -40,7 +52,7 @@ TODAS AS ROTAS PRECISÃO DE ATENTICAÇÃO PARA SER ACESSADAS. Para fazer a auten
 
     {
         "username" : "guilherme"
-        "senha" : 'gui123'
+        "senha" : "gui123"
     }
 
 Assim que enviar a requisição será retornado um token, ele precisa ser enviado em todas as requisições.
