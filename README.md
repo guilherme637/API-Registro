@@ -1,4 +1,4 @@
-                                                                            API Registro de Contas
+    API Registro de Contas
 <hr>
 Essa API tem o intuito de mostrar meus conhecimentos em desenvolvimento de API's e praticar os conhecimentos que venho 
 adquirindo em meus estudos.
@@ -53,7 +53,7 @@ Ainda não foi implemetado a rota para criar novos usuários, então será neces
 <hr>
 
 
-                                                                            Rotas de acesso
+    Rotas de acesso
 <br>
 
 **GET**
@@ -114,7 +114,7 @@ Para criar uma conta é necessário informar o tipo dela.
 
 Essa rota retorna uma conta específica, basta passar o id no parâmetro {id}. 
 
-    | GET |  /conta/{id}
+    | GET |  /conta/{id} status:202
 
 <br>
 <hr>
@@ -133,7 +133,7 @@ Essa rota irá atualizar, basta informar o número do id no parâmetro {id} os s
 Apenas essas informações irão atualizar.
 
 
-    | PUT |  /conta/{id}/update
+    | PUT |  /conta/{id}/update status:204
 
 <br>
 <hr>
@@ -142,7 +142,7 @@ Apenas essas informações irão atualizar.
 
 Essa rota irá remover uma conta permanentemente, basta informar o número do id no parâmetro {id}.
 
-    | DELETE |  /conta/{id}/delete
+    | DELETE |  /conta/{id}/delete status:204
 <br>
 <hr>
 
@@ -150,7 +150,7 @@ Essa rota irá remover uma conta permanentemente, basta informar o número do id
 
 Essa rota retorna os tipos de contas e todas a consta que estão associadas aos grupos.
 
-    | GET | /tipo/conta/{grupoId}
+    | GET | /tipo/conta/{grupoId} status:200
 
 <hr>
 
