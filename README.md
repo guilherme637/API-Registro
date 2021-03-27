@@ -14,8 +14,8 @@ adquirindo em meus estudos.
 
 A conexão padrão esta para SQLite, mas você pode escolher qualquer conexão no arquivo `.env` e descomentandos as linhas. para descomentar basta remover `#`.
 
- DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?
+ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" <br>
+#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name? <br>
 #DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name
 
 
