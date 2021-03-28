@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\GrupoRepository;
-use App\Service\ResponseJsonFactory;
+use App\Helper\ResponseJsonFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

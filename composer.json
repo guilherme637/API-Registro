@@ -4,7 +4,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=7.2.5",
+    "php": ">=7.4",
     "ext-ctype": "*",
     "ext-iconv": "*",
     "ext-pdo": "*",
@@ -22,7 +22,8 @@
     "symfony/maker-bundle": "^1.29",
     "symfony/proxy-manager-bridge": "5.2.*",
     "symfony/security-bundle": "5.2.*",
-    "symfony/yaml": "5.2.*"
+    "symfony/yaml": "5.2.*",
+    "ext-json": "*"
   },
   "config": {
     "optimize-autoloader": true,

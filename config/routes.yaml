@@ -1,3 +1,30 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+  path: /contas
+  controller: App\Controller\ContaController:index
+  methods: GET
+
+store:
+  path: /conta
+  controller: App\Controller\ContaController:store
+  methods: POST
+
+show:
+  path: /conta/{id}
+  controller: App\Controller\ContaController:show
+  methods: GET
+
+update:
+  path: /conta/{id}/update
+  controller: App\Controller\ContaController:update
+  methods: PUT
+
+delete:
+  path: /conta/{id}/delete
+  controller: App\Controller\ContaController:delete
+  methods: DELETE
+
+findByGroup:
+  path: /tipo/conta/{grupoId}
+  controller: App\Controller\ContaController:findByGrupo
+  methods: GET
+

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
-use App\Service\ResponseJsonFactory;
+use App\Helper\ResponseJsonFactory;
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,24 +31,13 @@ class LoginController extends AbstractController
     {
         $dadosJson = json_decode($request->getContent());
 
-        if (is_null($dadosJson->username) || is_null($dadosJson->senha)) {
-            return ResponseJsonFactory::responseJson(
-                ['message' => 'Envie um username e uma senha'],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
+        $this->verificaUsernameESenha($dadosJson);
 
         $user = $this->repository->findOneBy(
             ['username' => $dadosJson->username]
         );
 
-        if (!$this->encoder->isPasswordValid($user, $dadosJson->senha)) {
-            return new JsonResponse(
-                [
-                    'error' => 'Usuário e senha inválidos'
-                ], JsonResponse::HTTP_UNAUTHORIZED
-            );
-        }
+        $this->verificaSenha($user, $dadosJson);
 
         $jwt = JWT::encode(['username' => $user->getUsername()], '18491@//134/@usSAj', 'HS256');
 
@@ -57,5 +46,26 @@ class LoginController extends AbstractController
                 'access_token' => $jwt
             ]
         );
+    }
+
+    private function verificaUsernameESenha($dadosJson)
+    {
+        if (is_null($dadosJson->username) || is_null($dadosJson->senha)) {
+            return ResponseJsonFactory::responseJson(
+                ['message' => 'Envie um username e uma senha'],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    private function verificaSenha($user, $dadosJson)
+    {
+        if (!$this->encoder->isPasswordValid($user, $dadosJson->senha)) {
+            return new JsonResponse(
+                [
+                    'error' => 'Usuário e senha inválidos'
+                ], JsonResponse::HTTP_UNAUTHORIZED
+            );
+        }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Helper\ExtratorRequest;
 use App\Repository\ContaRepository;
 use App\Repository\GrupoRepository;
 use App\Service\ContaFactory;
-use App\Service\ExtratorRequest;
-use App\Service\ResponseJsonFactory;
+use App\Helper\ResponseJsonFactory;
 use App\Service\UpdateContaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 class ContaController extends AbstractController
 {
@@ -42,11 +41,10 @@ class ContaController extends AbstractController
     }
 
     /**
-     * @Route ("/contas", methods={"GET"})
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function index(Request $request): Response
+    public function index(Request $request): JsonResponse
     {
         $ordena = $this->extrator->ordernar($request);
         $filtra = $this->extrator->filtrar($request);
@@ -63,7 +61,6 @@ class ContaController extends AbstractController
     }
 
     /**
-     * @Route ("/contas", methods={"POST"})
      * @return JsonResponse
      * @var Request $request
      */
@@ -80,11 +77,10 @@ class ContaController extends AbstractController
     }
 
     /**
-     * @Route ("conta/{id}", methods={"GET"})
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function show(int $id): Response
+    public function show(int $id): JsonResponse
     {
         $conta = $this->repository->find($id);
 
@@ -92,12 +88,11 @@ class ContaController extends AbstractController
     }
 
     /**
-     * @Route ("/conta/{id}/update", methods={"PUT"})
      * @param int $id
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function update(int $id, Request $request): Response
+    public function update(int $id, Request $request): JsonResponse
     {
         $novaConta = $this->contaFactory->criarConta(
             $request->getContent(),
@@ -113,28 +108,26 @@ class ContaController extends AbstractController
 
         $this->repository->update();
 
-        return ResponseJsonFactory::responseJson('', Response::HTTP_NO_CONTENT);
+        return ResponseJsonFactory::responseJson('', JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route ("/conta/{id}/delete", methods={"DELETE"})
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function delete(int $id): Response
+    public function delete(int $id): JsonResponse
     {
         $this->manager->remove($this->repository->find($id));
         $this->manager->flush();
 
-        return ResponseJsonFactory::responseJson('', Response::HTTP_NO_CONTENT);
+        return ResponseJsonFactory::responseJson('', JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route ("/tipo/conta/{grupoId}", methods={"GET"})
      * @param int $grupoId
      * @return JsonResponse
      */
-    public function findByGrupo(int $grupoId)
+    public function findByGrupo(int $grupoId): JsonResponse
     {
         $grupoConta = $this->repository->findBy(
             [
