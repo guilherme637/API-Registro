@@ -14,18 +14,22 @@ adquirindo em meus estudos.
 
 A conexão padrão esta para SQLite, mas você pode escolher qualquer conexão no arquivo `.env` e descomentandos as linhas. para descomentar basta remover `#`.
 
- DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" <br>
-#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name? <br>
+ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" <br> <br>
+#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name? <br> <br>
 #DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name
 
 
     Executar na linha de comando
     
-    º composer install //instala todas dependências que o projeto precisa
-    ° php bin/console doctrine:database:create // cria um o banco de dados de acordo com o driver
-    ° php bin/console doctrine:migrations:migrate // executa o SQL para criar as tabelas
-    ° php bin/console doctrine:fixture:load // irá criar o usuário e tipos de conta
-    º php -S localhost:8080 -t public // esse comando ira subir um servidor local para acessar as rotas
+    º composer install                                      //instala todas dependências que o projeto precisa
+    
+    ° php bin/console doctrine:database:create              // cria um o banco de dados de acordo com o driver
+    
+    ° php bin/console doctrine:migrations:migrate           // executa o SQL para criar as tabelas
+    
+    ° php bin/console doctrine:fixture:load                 // irá criar o usuário e tipos de conta
+    
+    º php -S localhost:8080 -t public                       // esse comando ira subir um servidor local para acessar as rotas
     
 
 <hr>
@@ -39,14 +43,14 @@ Verbos HTTP's utilizados
 <hr>
 
 A rotas podem ser encontradas acessando `src/Controller/ContaController.php` nesse controle é possível encontrar
-todas a rotas que estão sendo chamadas. Assim que é que entrar em `ContaController.php`, irá ver que o construtor recebe
+todas a rotas que estão sendo chamadas. Assim que acessar o arquivo `ContaController.php`, irá ver que o construtor recebe
 por injeção de dependência algumas classes e interfaces. Foi criado o arquivo de `ResponseJsonFactory`
 para retorna o uma response um pouco mais detalhada, mas caso queira usar a classe `JsonResponse` não tem problema, mas 
 irá precisar fazer alterações nas responses das outras rotas.
 
 <hr>
 
-TODAS AS ROTAS PRECISÃO DE ATENTICAÇÃO PARA SER ACESSADAS. Para fazer a autenticação basta acessar
+TODAS AS ROTAS PRECISÃO DE AUTENTICAÇÃO PARA SER ACESSADAS. Para fazer a autenticação basta acessar
 
 `/login` e informar os seguintes campos no corpo da requisição
 
