@@ -12,12 +12,15 @@ adquirindo em meus estudos.
 
 <hr>
 
-A conexão padrão esta para SQLite, mas você pode escolher qualquer conexão no arquivo `.env` e descomentandos as linhas. para descomentar basta remover `#`.
+A conexão padrão esta para SQLite, mas você pode escolher qualquer conexão no arquivo `.env` e configurando de acordo com as informações que é pedido, como a configuração esta como SQLite, quando usar outro dirver é preciso comentar DATABASE_PATH e ir no arquivo `config/packages/doctrine.yaml` e comentar `path: '%env(resolve:DATABASE_PATH)%'`. para descomentar basta remover `#`.
 
- DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" <br> <br>
-#DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name? <br> <br>
-#DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name
-
+    #DATABASE_NAME=
+    DATABASE_DRIVER=pdo_sqlite
+    DATABASE_PATH=%kernel.project_dir%/var/data.db
+    #DATABASE_HOST=
+    #DATABASE_PASSWORD=
+    #DATABASE_PORT=
+<br>
 
     Executar na linha de comando
     
