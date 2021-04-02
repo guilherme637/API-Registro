@@ -2,42 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ContaRepository;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Entity(repositoryClass=ContaRepository::class)
- */
 class Conta implements JsonSerializable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=120)
-     */
-    private $nome;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $valor;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $data;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Grupo::class, inversedBy="conta")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $grupo;
+    private int $id;
+    private string $nome;
+    private float $valor;
+    private \DateTime $data;
+    private Grupo $grupo;
 
     public function getId(): ?int
     {

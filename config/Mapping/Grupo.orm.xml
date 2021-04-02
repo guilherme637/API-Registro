@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\Grupo" table="grupo" repository-class="App\Repository\GrupoRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="tipo" type="string" length="50"/>
+
+        <one-to-many field="conta" target-entity="App\Entity\Conta" mapped-by="grupo"/>
+    </entity>
+</doctrine-mapping>

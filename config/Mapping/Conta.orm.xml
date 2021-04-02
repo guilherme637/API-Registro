@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\Conta" table="conta" repository-class="App\Repository\ContaRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="nome" type="string" length="100"/>
+        <field name="valor" type="float"/>
+        <field name="data" type="date"/>
+
+        <many-to-one field="grupo" target-entity="App\Entity\Grupo" inversed-by="conta">
+            <join-column nullable="false"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

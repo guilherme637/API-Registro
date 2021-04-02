@@ -2,32 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\GrupoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Entity(repositoryClass=GrupoRepository::class)
- */
 class Grupo implements JsonSerializable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=120)
-     */
     private $tipo;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Conta::class, mappedBy="grupo")
-     */
     private $conta;
 
     public function __construct()
