@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use JsonSerializable;
 
 class Conta implements JsonSerializable
@@ -9,8 +10,10 @@ class Conta implements JsonSerializable
     private int $id;
     private string $nome;
     private float $valor;
-    private \DateTime $data;
+    private DateTimeInterface $data;
+    private string $dataFeedBack;
     private Grupo $grupo;
+    private Financa $financa;
 
     public function getId(): ?int
     {
@@ -41,12 +44,12 @@ class Conta implements JsonSerializable
         return $this;
     }
 
-    public function getData(): ?\DateTimeInterface
+    public function getData(): ?DateTimeInterface
     {
         return $this->data;
     }
 
-    public function setData(\DateTimeInterface $data): self
+    public function setData(DateTimeInterface $data): self
     {
         $this->data = $data;
 
@@ -58,9 +61,34 @@ class Conta implements JsonSerializable
         return $this->grupo;
     }
 
-    public function setGrupo(?Grupo $grupo): self
+    public function setGrupo(Grupo $grupo): self
     {
         $this->grupo = $grupo;
+
+        return $this;
+    }
+
+
+    public function getDataFeedBack(): ?string
+    {
+        return $this->dataFeedBack;
+    }
+
+    public function setDataFeedBack(?string $dataFeedBack): self
+    {
+        $this->dataFeedBack = $dataFeedBack;
+
+        return $this;
+    }
+
+    public function getFinanca(): Financa
+    {
+        return $this->financa;
+    }
+
+    public function setFinanca(Financa $financa): self
+    {
+        $this->financa = $financa;
 
         return $this;
     }
@@ -71,8 +99,10 @@ class Conta implements JsonSerializable
             'id' => $this->getId(),
             'nome' => $this->getNome(),
             'valor' => $this->getValor(),
-            'data do vencimento' => $this->getData()->format('m-d-Y'),
-            'tipo de conta' => $this->getGrupo()
+            'vencimento' => $this->getData()->format('m-d-Y'),
+            'feedback' => $this->getDataFeedBack(),
+            'tipoConta' => $this->getGrupo(),
+            'financa' => $this->getFinanca()
         ];
     }
 }

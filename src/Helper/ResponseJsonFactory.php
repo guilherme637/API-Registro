@@ -27,6 +27,18 @@ class ResponseJsonFactory
             'results' => $response
         ];
 
+        if (is_array($response) && count($response) === 2) {
+            $content = [
+                'status' => $status,
+                'itensPorPagina' => $itens,
+                'paginaAtual' => $pagina,
+                'valorTotalDasContas' => $response[0],
+                'results' => $response[1]
+            ];
+
+            return new JsonResponse($content, $status);
+        }
+
         if (is_null($itens) || is_null($pagina)) {
             unset($content['itensPorPagina']);
             unset($content['paginaAtual']);

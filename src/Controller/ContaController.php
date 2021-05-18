@@ -2,35 +2,36 @@
 
 namespace App\Controller;
 
-use App\Helper\ExtratorRequest;
+use App\Helper\ExtratorRequestInterface;
 use App\Repository\ContaRepository;
+use App\Repository\FinancaRepository;
 use App\Repository\GrupoRepository;
-use App\Service\ContaFactory;
 use App\Helper\ResponseJsonFactory;
-use App\Service\UpdateContaService;
+use App\Service\ContaFactoryInterface;
+use App\Service\UpdateContaServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class ContaController extends AbstractController
+class ContaController
 {
     private ContaRepository $repository;
     private EntityManagerInterface $manager;
-    private ContaFactory $contaFactory;
+    private ContaFactoryInterface $contaFactory;
     private GrupoRepository $grupoRepository;
-    private UpdateContaService $updateContaService;
-    private ExtratorRequest $extrator;
+    private UpdateContaServiceInterface $updateContaService;
+    private ExtratorRequestInterface $extrator;
+    private FinancaRepository $financaRepository;
 
     public function __construct(
         EntityManagerInterface $manager,
         ContaRepository $repository,
         GrupoRepository $grupoRepository,
-        ContaFactory $contaFactory,
-        UpdateContaService $updateContaService,
-        ExtratorRequest $extrator
+        ContaFactoryInterface $contaFactory,
+        UpdateContaServiceInterface $updateContaService,
+        ExtratorRequestInterface $extrator,
+        FinancaRepository $financaRepository
     ) {
         $this->repository = $repository;
         $this->manager = $manager;
@@ -38,6 +39,7 @@ class ContaController extends AbstractController
         $this->grupoRepository = $grupoRepository;
         $this->updateContaService = $updateContaService;
         $this->extrator = $extrator;
+        $this->financaRepository = $financaRepository;
     }
 
     /**
@@ -46,7 +48,7 @@ class ContaController extends AbstractController
      */
     public function index(Request $request): JsonResponse
     {
-        $ordena = $this->extrator->ordernar($request);
+        $ordena = $this->extrator->ordenar($request);
         $filtra = $this->extrator->filtrar($request);
         [$qtdItens, $page] = $this->extrator->itensPorPagina($request);
 
@@ -57,7 +59,9 @@ class ContaController extends AbstractController
             ($page - 1) * $qtdItens
         );
 
-        return ResponseJsonFactory::responseJson($contas, JsonResponse::HTTP_OK, $qtdItens, $page);
+        $valorTotal = $this->repository->valueTotal();
+
+        return ResponseJsonFactory::responseJson([$valorTotal, $contas], JsonResponse::HTTP_OK, $qtdItens, $page);
     }
 
     /**
@@ -68,7 +72,8 @@ class ContaController extends AbstractController
     {
         $conta = $this->contaFactory->criarConta(
             $request->getContent(),
-            $this->grupoRepository
+            $this->grupoRepository,
+            $this->financaRepository
         );
 
         $this->repository->save($conta);
@@ -96,7 +101,8 @@ class ContaController extends AbstractController
     {
         $novaConta = $this->contaFactory->criarConta(
             $request->getContent(),
-            $this->grupoRepository
+            $this->grupoRepository,
+            $this->financaRepository
         );
 
         $this->updateContaService->editarConta(

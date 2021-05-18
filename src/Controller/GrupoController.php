@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Repository\GrupoRepository;
 use App\Helper\ResponseJsonFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GrupoController extends AbstractController
+class GrupoController
 {
     private GrupoRepository $grupoRepository;
 
