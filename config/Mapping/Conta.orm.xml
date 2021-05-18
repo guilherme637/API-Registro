@@ -6,12 +6,17 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="nome" type="string" length="100"/>
-        <field name="valor" type="float"/>
-        <field name="data" type="date"/>
+        <field name="nome" type="string" length="100" nullable="false"/>
+        <field name="valor" type="float" nullable="false"/>
+        <field name="data" type="date" nullable="false"/>
+        <field name="dataFeedBack" type="string" nullable="true"/>
 
         <many-to-one field="grupo" target-entity="App\Entity\Grupo" inversed-by="conta">
             <join-column nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="financa" target-entity="App\Entity\Financa" inversed-by="conta">
+            <join-column name="financa_id" referenced-column-name="id"/>
         </many-to-one>
     </entity>
 </doctrine-mapping>

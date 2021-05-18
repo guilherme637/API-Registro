@@ -3,11 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Conta;
-use App\Service\ResponseJsonFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Conta|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +19,7 @@ class ContaRepository extends ServiceEntityRepository
         parent::__construct($registry, Conta::class);
     }
 
-    public function save($entity)
+    public function save($entity): ?array
     {
         $this->getEntityManager()->beginTransaction();
         try {
@@ -33,9 +30,11 @@ class ContaRepository extends ServiceEntityRepository
             $this->getEntityManager()->rollback();
             return $ex->getTrace();
         }
+
+        return null;
     }
 
-    public function update()
+    public function update(): ?array
     {
         $this->getEntityManager()->beginTransaction();
         try {
@@ -45,6 +44,40 @@ class ContaRepository extends ServiceEntityRepository
             $this->getEntityManager()->rollback();
             return $ex->getTrace();
         }
+
+        return null;
+    }
+
+    public function valueTotal()
+    {
+        $velueTotal = $this->getEntityManager()
+            ->createQuery('SELECT c.valor from App\Entity\Conta c')
+            ->getResult();
+
+        return array_sum(array_column($velueTotal, 'valor'));
+    }
+
+    public function onlyDateFeedBack()
+    {
+        $dates = $this->getEntityManager()
+            ->createQuery('SELECT c.dataFeedBack FROM App\Entity\Conta c')
+            ->getResult();
+
+        return array_values(array_column($dates, 'dataFeedBack'));
+    }
+
+    public function findAllGrupos(int $id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT IDENTITY(c.grupo) as grupo_id, c.nome, c.valor, c.dataFeedBack, f.id FROM App\Entity\Conta c 
+                 INNER JOIN App\Entity\Grupo gp WITH c.grupo = gp.id
+                 INNER JOIN App\Entity\Financa f WITH c.financa = f.id
+                 WHERE f.id = :id'
+            )
+            ->setParameter('id', $id)
+            ->getResult()
+        ;
     }
 
     // /**

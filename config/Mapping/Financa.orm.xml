@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\Financa" table="financa" repository-class="App\Repository\FinancaRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="saldo" type="float" nullable="false"/>
+        <field name="data" type="date" nullable="true"/>
+        <field name="dispesa" type="float" nullable="true"/>
+
+        <one-to-many field="conta" target-entity="App\Entity\Conta" mapped-by="conta"/>
+    </entity>
+</doctrine-mapping>

@@ -4,7 +4,7 @@ namespace App\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class ExtratorRequest
+class ExtratorRequest implements ExtratorRequestInterface
 {
     private VerificaQueryString $verifica;
 
@@ -13,21 +13,21 @@ class ExtratorRequest
         $this->verifica = new VerificaQueryString();
     }
 
-    public function filtrar(Request $request)
+    public function filtrar(Request $request): ?array
     {
         [$filtraDados] = $this->verifica->verificarDadosRequest($request);
 
         return $filtraDados;
     }
 
-    public function ordernar(Request $request)
+    public function ordenar(Request $request): ?array
     {
         [ , $ordenacao] = $this->verifica->verificarDadosRequest($request);
 
         return $ordenacao;
     }
 
-    public function itensPorPagina(Request $request)
+    public function itensPorPagina(Request $request): ?array
     {
         [ , , $qtdItens, $pagina] = $this->verifica->verificarDadosRequest($request);
 
